@@ -1,0 +1,131 @@
+const Board = document.querySelector("#board");
+const Digit = document.querySelector("#digit");
+const Delete = document.querySelector("#delete");
+const Mistake = document.querySelector("#mistake");
+let lastselected = null;
+let error = 0;
+
+const puzzle = [
+    "8-6-1----",
+    "--3-64-9-",
+    "9-----816",
+    "-8-396---",
+    "7-2-4-3-9",
+    "---572-8-",
+    "521-----4",
+    "-3-75-2--",
+    "----2-1-5",
+]
+const solution = [
+    "856917423",
+    "213864597",
+    "947235816",
+    "185396724",
+    "762148359",
+    "394572681",
+    "521683974",
+    "439751268",
+    "678429135",
+];
+
+window.onload = (() => {
+
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            const div = document.createElement("div");
+            div.classList.add("tile");
+            div.addEventListener("click", selectTile);
+            div.setAttribute("row", i);
+            div.setAttribute("col", j);
+            if (puzzle[i][j] != "-") {
+                div.innerText = puzzle[i][j];
+                div.classList.add("filled");
+
+            }
+            if (i == 2 || i == 5) {
+                div.classList.add("border-bottom");
+            }
+            if (j == 2 || j == 5) {
+                div.classList.add("border-right");
+            }
+            Board.appendChild(div);
+        }
+    }
+    for (let i = 0; i < 9; i++) {
+        const div = document.createElement("div");
+        div.classList.add("tile");
+        div.addEventListener("click", addnum);
+        div.innerText = i + 1;
+        Digit.appendChild(div);
+    }
+
+});
+function selectTile() {
+    if (lastselected != null) {
+        lastselected.classList.remove("select-tile");
+    }
+    lastselected = this;
+    lastselected.classList.add("select-tile");
+}
+function addnum() {
+    if (lastselected.innerText == "" || lastselected.classlist.contains("danger")) {
+        lastselected.innerText = this.innerText;//it means the innertext of addnum like 1,2,3 is writen in lastselected or the arrow is lastly appear by clicking.
+    }
+    let row = lastselected.getAttribute("row");
+    let col = lastselected.getAttribute("col");
+    if (solution[row][col] == lastselected.innerText) {
+        lastselected.classList.remove("danger");
+
+    } else {
+        lastselected.classList.add("danger");
+        adderroranddisplay();
+
+    }
+    if (error > 2) {
+        alert("You Lost!");
+        location.reload();
+    }
+    if (filled()) {
+        const alltiles = Board.querySelectorAll(".tile");
+        let useranswer = [...alltiles].map((tile) => {
+        return tile.innerText;
+        });
+        let num = 0;
+        for(i=0;i<9;i++){
+            for(j=0;j<9;j++){
+                if(solution[i][j]!=useranswer[num]){
+                    alltiles[num].classList.add("danger");
+                }
+                num++;
+            }
+        }
+        let dangerclass = [...alltiles].some((tile)=>{
+               return tile.classlist.conatins("danger");
+        });
+        if(dangerclass == "true"){
+            if(error>2){
+                alert("You Lost the Puzzle");
+                location.reload();
+            }
+        }else{
+                        alert("Congrats!you win the game");
+
+        }
+    }
+}
+Delete.onclick = () => {
+    if (!lastselected.classList.contains("filled")) {
+        lastselected.innerText = "";
+    }
+
+}
+function adderroranddisplay() {
+    error++;
+    Mistake.innerText = error;
+}
+function filled() {
+    const alltiles = Board.querySelectorAll(".tile");
+    return [...alltiles].every((tile) => {
+        return tile.innerText != "";
+    });
+}
