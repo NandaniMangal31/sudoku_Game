@@ -1,21 +1,33 @@
 # sudoku_Game
-This is a fully playable Sudoku game built using HTML, CSS, and JavaScript. The game features a fixed puzzle with a clean UI, player interaction, and error tracking — great for practicing DOM manipulation and grid-based logic.
+A web-based Sudoku Solver built using HTML, CSS, and JavaScript.
+Users can input any 9x9 Sudoku puzzle, and by simply clicking the "Solve" button, the puzzle is solved instantly using a backtracking algorithm.
 
 🎯 Features:
-🧩 9x9 Sudoku board layout
+🔢 9x9 interactive Sudoku grid
 
-🖱️ Click-to-select cells and numbers
+✍️ Manual puzzle input
 
-❌ Tracks incorrect moves (mistakes)
+⚡ One-click automatic solve using backtracking
 
-🔄 Option to restart/reset the game 
+🧠 Validates numbers before solving
 
-💡 Built with pure JavaScript (no frameworks)
+🔁 Clear grid button to start over
 
-🛠️ Tech Stack:
+🖥️ Clean and responsive design
 
-HTML5 – Grid structure and board setup
+🛠️ Technologies Used:
+HTML
 
-CSS3 – Styling, layout, and board design
+CSS (for grid styling and layout)
 
-JavaScript – Game logic, input handling, and error tracking
+JavaScript (DOM manipulation + backtracking algorithm)
+
+🚀 How to Use:
+Open the index.html file in any browser.
+
+Enter your Sudoku puzzle (leave blanks empty).
+
+Click "Solve" – the puzzle will be solved instantly.
+
+Click "Clear" to reset the board and try a new one.
+
